@@ -89,7 +89,7 @@ public extension URLRequest {
         method.apply(to: self)
     }
     
-    func header(_ header: Header, value: String) -> URLRequest {
+    func header(_ header: HTTPHeader, value: String) -> URLRequest {
         var copy = self
         copy.setValue(value, forHTTPHeaderField: header.rawValue)
         return copy
@@ -103,7 +103,7 @@ public extension URLRequest {
     
 }
 
-public enum Header: String {
+public enum HTTPHeader: String {
     case accept = "Accept"
     case acceptCharset = "Accept-Charset"
     case acceptEncoding = "Accept-Encoding"

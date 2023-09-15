@@ -6,18 +6,19 @@
 //
 
 import SwiftUI
+import CoreGraphics
 
 #if os(macOS)
-extension NSImage {
+public extension NSImage {
     var cgImage: CGImage? {
         cgImage(forProposedRect: nil, context: nil, hints: nil)
     }
 }
 
-typealias Imagen = NSImage
+public typealias Imagen = NSImage
 #else
-typealias Imagen = UIImage
-extension UIImage {
+public typealias Imagen = UIImage
+public extension UIImage {
     convenience init?(cgImage: CGImage, size: CGSize) {
         guard let cgImage = cgImage.resize(to: size) else {
             return nil
@@ -27,7 +28,7 @@ extension UIImage {
 }
 #endif
 
-extension Imagen {
+public extension Imagen {
 #if os(macOS)
     typealias Size = NSSize
 #else
@@ -54,9 +55,7 @@ extension Imagen {
     }
 }
 
-import CoreGraphics
-
-extension CGImage {
+public extension CGImage {
     func resize(to size: CGSize) -> CGImage? {
         let width = Int(size.width)
         let height = Int(size.height)
@@ -80,7 +79,7 @@ extension CGImage {
     }
 }
 
-extension Image {
+public extension Image {
     
     static func loadImage(url: URL) -> Imagen? {
         guard let data = try? Data(contentsOf: url), let imagen = Imagen(data: data) else {
@@ -135,4 +134,3 @@ extension Image {
         return dir
     }
 }
-

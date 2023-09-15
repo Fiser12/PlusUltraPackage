@@ -8,6 +8,21 @@
 import SwiftUI
 
 public extension View {
+    func alert<A: View, T>(_ titleKey: LocalizedStringKey, has: Binding<T?>, @ViewBuilder actions: (T) -> A) -> some View {
+        let isPresented = Binding(get: {
+            return has.wrappedValue != nil
+        }, set: { newValue in
+            if !newValue {
+                has.wrappedValue = nil
+            }
+        })
+        return alert(titleKey, isPresented: isPresented, actions: {
+            if let value = has.wrappedValue{
+                actions(value)
+            }
+        })
+    }
+
     @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
         if condition {
             transform(self)

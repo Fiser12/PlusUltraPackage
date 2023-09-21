@@ -107,7 +107,7 @@ public extension Image {
             try pngData!.write(to: imageURL)
             return uuid
         } catch {
-            log("SAVE_IMAGE: \(error)", level: .ERROR)
+            logger.error("SAVE_IMAGE: \(error)")
         }
         return nil
     }
@@ -127,7 +127,7 @@ public extension Image {
         do {
             try fileManager.createDirectory(atPath: dir.path, withIntermediateDirectories: true, attributes: nil)
         } catch {
-            log("APP_PATH: \(error)", level: .ERROR)
+            logger.error("APP_PATH: \(error)")
             return nil
         }
         

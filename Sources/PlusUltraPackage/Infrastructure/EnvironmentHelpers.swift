@@ -31,3 +31,29 @@ public final class EnvironmentHelpers {
     #endif
     }()
 }
+
+@propertyWrapper
+public struct EnvVariable<T> {
+    private var value: T
+    private let conversion: (String) -> T
+    private let key: String
+    
+    public var wrappedValue: T {
+        get {
+            if let value = getenv(key), let str = String(utf8String: value) {
+                return conversion(str)
+            } else {
+                return value
+            }
+        }
+        set {
+            value = newValue
+        }
+    }
+
+    public init(wrappedValue: T, key: String, conversion: @escaping (String) -> T) {
+        self.value = wrappedValue
+        self.key = key
+        self.conversion = conversion
+    }
+}

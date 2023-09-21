@@ -31,8 +31,8 @@ public extension URLSession {
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
-            log("Repository: Decoding failure, data: \(data) \(T.self)", level: .ERROR)
-            log("Repository: Data to UTF8: \(String(data: data, encoding: String.Encoding.utf8) ?? "")", level: .DEBUG)
+            logger.error("Repository: Decoding failure, data: \(data) \(T.self)")
+            logger.debug("Repository: Data to UTF8: \(String(data: data, encoding: String.Encoding.utf8) ?? "")")
             throw APIError.json(data, CodableError(error))
         }
     }
